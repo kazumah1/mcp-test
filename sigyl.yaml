@@ -1,4 +1,5 @@
 runtime: node
+language: typescript
 startCommand:
   type: http
   configSchema:
