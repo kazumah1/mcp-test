@@ -5,7 +5,9 @@
  * To add a new tool, use the template at the bottom of this file.
  */
 
+import express from "express";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js"
+import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js"
 import { z } from "zod"
 
 // ============================================================================
@@ -49,17 +51,21 @@ export default function createStatelessServer({
 // SERVER STARTUP
 // ============================================================================
 
-import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+const app = express();
+app.use(express.json());
 
-async function main() {
+app.post('/mcp', async (req, res) => {
 	const server = createStatelessServer({ config: {} });
-	console.log("🚀 MCP Server starting...");
-	const transport = new StdioServerTransport();
+	const transport = new StreamableHTTPServerTransport({ sessionIdGenerator: undefined });
+	res.on('close', () => {
+		transport.close();
+		server.close();
+	});
 	await server.connect(transport);
-	console.log("✅ MCP Server connected and ready");
-}
+	await transport.handleRequest(req, res, req.body);
+});
 
-main().catch((error) => {
-	console.error("❌ Server error:", error);
-	process.exit(1);
+const port = process.env.PORT || 8080;
+app.listen(port, () => {
+	console.log("MCP Server listening on port " + port);
 });
