@@ -56,7 +56,7 @@ const app = express();
 app.use(express.json());
 app.use(cors({ origin: "http://localhost:3001" }));
 
-app.post('/mcp', async (req, res) => {
+app.post('/@:slug/mcp', async (req, res) => {
 	const server = createStatelessServer({ config: {} });
 	const transport = new StreamableHTTPServerTransport({ sessionIdGenerator: undefined });
 	res.on('close', () => {
