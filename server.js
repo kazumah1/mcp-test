@@ -8,7 +8,6 @@ import express from "express";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
 import { z } from "zod";
-import cors from "cors";
 // ============================================================================
 // SERVER CONFIGURATION
 // ============================================================================
@@ -32,23 +31,3 @@ export default function createStatelessServer({ config, }) {
     });
     return server.server;
 }
-// ============================================================================
-// SERVER STARTUP
-// ============================================================================
-const app = express();
-app.use(express.json());
-app.use(cors({ origin: "http://localhost:3001" }));
-app.post('/mcp', async (req, res) => {
-    const server = createStatelessServer({ config: {} });
-    const transport = new StreamableHTTPServerTransport({ sessionIdGenerator: undefined });
-    res.on('close', () => {
-        transport.close();
-        server.close();
-    });
-    await server.connect(transport);
-    await transport.handleRequest(req, res, req.body);
-});
-const port = process.env.PORT || 8080;
-app.listen(port, () => {
-    console.log("MCP Server listening on port " + port);
-});
