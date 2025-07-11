@@ -107,5 +107,20 @@ export default function createStatelessServer({
 		}
 	);
 
+	server.tool(
+		'randomColor',
+		'Get a random color',
+		{},
+		async () => {
+			const colors = ['red', 'green', 'blue', 'yellow', 'purple', 'orange', 'pink', 'brown', 'gray', 'black', 'white'];
+			const randomColor = colors[Math.floor(Math.random() * colors.length)];
+			return {
+				content: [
+					{ type: "text", text: `Color: ${randomColor}` }
+				]
+			};
+		}
+	);
+
 	return server.server;
 }
