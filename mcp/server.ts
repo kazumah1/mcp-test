@@ -122,5 +122,20 @@ export default function createStatelessServer({
 		}
 	);
 
+	server.tool(
+		'randomShape',
+		'Get a random shape',
+		{},
+		async () => {
+			const shapes = ['circle', 'square', 'triangle', 'rectangle', 'oval', 'star', 'heart', 'diamond', 'pentagon', 'hexagon', 'octagon', 'star', 'heart', 'diamond', 'pentagon', 'hexagon', 'octagon'];
+			const randomShape = shapes[Math.floor(Math.random() * shapes.length)];
+			return {
+				content: [
+					{ type: "text", text: `Shape: ${randomShape}` }
+				]
+			};
+		}
+	);
+
 	return server.server;
 }
