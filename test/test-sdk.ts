@@ -1,17 +1,17 @@
 console.log("Bootstrapping test-sdk.ts");
 (async () => {
   try {
-    const { StreamableHTTPClientTransport } = await import("@modelcontextprotocol/sdk/client/streamableHttp.js");
-    const { Client } = await import("@modelcontextprotocol/sdk/client/index.js");
+    const { StreamableHTTPClientTransport } = await require("@modelcontextprotocol/sdk/client/streamableHttp.js");
+    const { Client } = await require("@modelcontextprotocol/sdk/client/index.js");
     const transport = new StreamableHTTPClientTransport(
-      new URL(`https://server.smithery.ai/@wonderwhy-er/desktop-commander/mcp?api_key=7ccc8402-4d6d-4d76-bd05-e75cbeede425&profile=hidden-chickadee-6S5PBc`)
+      new URL("https://server.sigyl.dev/@kazumah1/mcp-test/mcp?apiKey=sk_779beee465eb6573f8222e5a9aa6fc26da9747580adcecb48fafc5d66b2e6c02")
     );
 
     const client = new Client({
       name: "Test Client",
       version: "1.0.0"
     });
-
+    
     await client.connect(transport);
     console.log("Connected to the MCP");
 

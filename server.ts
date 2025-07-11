@@ -8,7 +8,7 @@
 import express from "express";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js"
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js"
-import { z } from "zod";
+import { z } from "zod"
 
 // ============================================================================
 // SERVER CONFIGURATION
@@ -39,6 +39,21 @@ export default function createStatelessServer({
 			return {
 				content: [
 					{ type: "text", text: value.split("").reverse().join("") }
+				]
+			};
+		}
+	);
+
+	server.tool(
+		"capitalizeStringEvens",
+		"Capitalize every even index of a string value",
+		{
+			value: z.string().describe("String to capitalize"),
+		},
+		async ({ value }) => {
+			return {
+				content: [
+					{ type: "text", text: value.split("").map((char, index) => index % 2 === 0 ? char.toUpperCase() : char).join("") }
 				]
 			};
 		}

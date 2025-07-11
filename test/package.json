@@ -1,7 +1,6 @@
 {
   "name": "test-sdk",
   "version": "1.0.0",
-  "type": "module",
   "main": "test-sdk.ts",
   "scripts": {
     "build": "tsc",
