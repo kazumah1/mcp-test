@@ -87,5 +87,25 @@ export default function createStatelessServer({
 		}
 	);
 
+	server.tool(
+		'quadraticEquation',
+		'Solve a quadratic equation',
+		{
+			a: z.number().describe('Coefficient of x^2'),
+			b: z.number().describe('Coefficient of x'),
+			c: z.number().describe('Constant term'),
+		},
+		async ({ a, b, c }) => {
+			const discriminant = b * b - 4 * a * c;
+			const root1 = (-b + Math.sqrt(discriminant)) / (2 * a);
+			const root2 = (-b - Math.sqrt(discriminant)) / (2 * a);
+			return {
+				content: [
+					{ type: "text", text: `Roots: ${root1}, ${root2}` }
+				]
+			};
+		}
+	);
+
 	return server.server;
 }
