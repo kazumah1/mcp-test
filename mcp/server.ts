@@ -74,5 +74,20 @@ export default function createStatelessServer({
 		}
 	);
 
+	server.tool(
+		"capitalizeString",
+		"Capitalize a string value",
+		{
+			value: z.string().describe("String to capitalize"),
+		},
+		async ({ value }) => {
+			return {
+				content: [
+					{ type: "text", text: value.toUpperCase() }
+				]
+			};
+		}
+	);
+
 	return server.server;
 }
