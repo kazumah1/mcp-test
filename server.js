@@ -36,5 +36,14 @@ export default function createStatelessServer({ config, }) {
             ]
         };
     });
+    server.tool("capitalizeStringOdds", "Capitalize every odd index of a string value", {
+        value: z.string().describe("String to capitalize"),
+    }, async ({ value }) => {
+        return {
+            content: [
+                { type: "text", text: value.split("").map((char, index) => index % 2 === 1 ? char.toUpperCase() : char).join("") }
+            ]
+        };
+    });
     return server.server;
 }
