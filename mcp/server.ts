@@ -74,5 +74,18 @@ export default function createStatelessServer({
 		}
 	);
 
+	server.tool(
+		'randomNumber',
+		'Generate a random number between 0 and 1',
+		{},
+		async () => {
+			return {
+				content: [
+					{ type: "text", text: Math.random().toString() }
+				]
+			};
+		}
+	);
+
 	return server.server;
 }
